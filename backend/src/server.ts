@@ -3,12 +3,13 @@ import app from './app';
 const mongoose = require('mongoose')
 const PORT = 4500;
 
-async function main() {
+const main = () => {
   try {
     // connect to mongoDB database
-    await mongoose.connect('mongodb://localhost:27017/user_dir_db', {
+    mongoose.connect('mongodb://localhost:27017/user_dir_db', {
       useNewUrlParser: true, useUnifiedTopology: true
     });
+
     // If connect is successful console.log this message
     mongoose.connection.once('open', () => {
       console.log('Connected to the database')
@@ -22,4 +23,5 @@ async function main() {
     //  catch and console.log every errors
     console.error(`${error}`);
   }
-} main();
+};
+main();
