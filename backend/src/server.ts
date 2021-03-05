@@ -21,6 +21,7 @@ const main = async () => {
       console.log(` User_Dir is running on Port : ${PORT}`);
     });
 
+    // Run the function that populates the db
     await init();
   } catch (error) {
     //  catch and console.log every errors

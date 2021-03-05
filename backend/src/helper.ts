@@ -16,8 +16,10 @@ const populateDBWithDummyData = (numberOfItems) => {
 
 // 
 export const init = async() => {
+  // check for table count
   const userCount = await Users.countDocuments();
 
+  // if user table is empty add data to the table
   if (userCount === 0) {
     const numberOfItems = 100000;
     console.log(`adding ${numberOfItems} users to the database`);
@@ -37,6 +39,7 @@ export const init = async() => {
 
 }
 
+// This function handles pagination
 export const pagination = (count, limit, page) => {
   const numberOfPages = Math.ceil(count / limit);
     const nextPage = parseInt(page, 10) + 1;
