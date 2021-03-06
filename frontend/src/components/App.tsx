@@ -1,14 +1,11 @@
-import React from 'react';
-import './App.css';
+import React from "react";
+import TableComponent from "./Table/Table";
+import { Grid } from "@material-ui/core";
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <p>
-          My React App
-        </p>
-      </header>
+      <TableComponent data={[]} />
     </div>
   );
 }
