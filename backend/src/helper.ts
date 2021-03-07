@@ -11,7 +11,7 @@ const populateDBWithDummyData = (numberOfItems) => {
     city: casual.city
   }))
 
-  return Users.insertMany(docs)
+  return Users.insertMany(docs, { ordered: false })
 }
 
 // 
@@ -33,7 +33,7 @@ export const init = async() => {
   } else {
 
     console.log('cleaning up the db');
-    // await Users.deleteMany({});
+    await Users.collection.drop();
     console.log('DB cleared');
   }
 
@@ -53,3 +53,50 @@ export const pagination = (count, limit, page) => {
     };
     return meta;
 }
+
+// mongoose.connection.on("open", function (err) {
+//   if (err) throw err;  
+//   var bulkUpdateOps = MyModel.collection.initializeUnorderedBulkOp(), 
+//       counter = 0;
+
+//   MyModel.find({}).lean().exec(function (err, docs) {
+//       if (err) throw err; 
+
+//       docs.forEach(function (doc){
+//           // computations
+//           var c1, c2, c3, c4, Field8;
+//           c1 = 10 + (0.03*doc.Field3);
+//           c2 = (doc.Field2 == 1) ? 1: 0.03;
+//           c3 = 7 - (doc.Field5.match(new RegExp(".", "g")) || []).length;
+//           c4 = (doc.Field2 == 1) ? Math.pow(doc.Field, -0.6) : 1;
+//           Field8 = c1*c2*c3*c4;
+
+//           counter++;
+
+//           bulkUpdateOps.find({ "_id": doc._id }).updateOne({
+//               "$set": { "Field8": Field8 }
+//           });
+
+//           if (counter % 500 == 0 ) {
+//               bulkUpdateOps.execute(function(err, result) {
+//                   if (err) throw err;  
+//                   bulkUpdateOps = MyModel.collection.initializeUnorderedBulkOp();
+//                   console.log(result);
+//               });
+//           } 
+
+//       });     
+
+//       if (counter % 500 != 0 ) {            
+//           bulkUpdateOps.execute(function(err, result) {
+//               if (err) throw err;  
+//               console.log(result);
+//           });         
+//       }       
+//   });
+
+//   var app = express();
+//   app.listen(3000, function () {
+//       console.log('now listening on http://localhost:3000');
+//   });
+// });
