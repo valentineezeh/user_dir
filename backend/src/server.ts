@@ -65,7 +65,7 @@ mongoose.connection.once('open', () => {
 //     });
 
 //     // Run the function that populates the db
-//     await init();
+//     // await init();
 //   } catch (error) {
 //     //  catch and console.log every errors
 //     console.error(`${error}`);
