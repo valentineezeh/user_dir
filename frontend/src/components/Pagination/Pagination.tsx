@@ -1,6 +1,6 @@
 import React from "react";
 import { paginationStyles } from "./Pagination.styles";
-import { IconButton } from "@material-ui/core";
+import { IconButton, Grid } from "@material-ui/core";
 import {
   KeyboardArrowRight,
   KeyboardArrowLeft,
@@ -48,7 +48,7 @@ const TablePaginationActions = (props: TablePaginationActionsProps) => {
   };
 
   return (
-    <div className={classes.root}>
+    <Grid className={classes.root}>
       <IconButton
         onClick={handleFirstPageButtonClick}
         disabled={page === 0}
@@ -87,7 +87,7 @@ const TablePaginationActions = (props: TablePaginationActionsProps) => {
       >
         {theme.direction === "rtl" ? <FirstPage /> : <LastPage />}
       </IconButton>
-    </div>
+    </Grid>
   );
 };
 
