@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
   Paper,
   Table,
@@ -8,17 +8,15 @@ import {
   TableHead,
   TableRow,
   TablePagination,
+  Grid,
 } from "@material-ui/core";
+import { useDispatch, useSelector } from "react-redux";
+import moment from "moment";
+import Loader from "react-loader-spinner";
 import { useStyles, StyledTableCell, StyledTableRow } from "./Table.styles";
 import TablePaginationActions from "../Pagination/Pagination";
-
-interface UserData {
-  email: string;
-  name: string;
-  age: number;
-  birthDate: string;
-  city: string;
-}
+import { UserData, fetchUsers } from "./TableSlice";
+import { RootState } from "../../store/store";
 
 interface ITableProps {
   data: Array<UserData>;
@@ -28,6 +26,7 @@ const TableComponent: React.FC<ITableProps> = ({ data }) => {
   const classes = useStyles();
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
+  const dispatch = useDispatch();
 
   const handleChangePage = (
     event: React.MouseEvent<HTMLButtonElement> | null,
@@ -43,178 +42,18 @@ const TableComponent: React.FC<ITableProps> = ({ data }) => {
     setPage(0);
   };
 
-  const tableHeaders = ["Name", "Email", "Age", "Date of Birth", "City"];
+  useEffect(() => {
+    const queryObject = { page, rowsPerPage };
+    dispatch(fetchUsers(queryObject));
+  }, [dispatch, page, rowsPerPage]);
 
-  const dataSample = [
-    {
-      email: "val@gmail.com",
-      name: "Valentine Ezeh",
-      birthDate: "14-02-1988",
-      age: 33,
-      city: "Lagos, Nigeria",
-    },
-    {
-      email: "val@gmail.com",
-      name: "Valentine Ezeh",
-      birthDate: "14-02-1988",
-      age: 33,
-      city: "Lagos, Nigeria",
-    },
-    {
-      email: "val@gmail.com",
-      name: "Valentine Ezeh",
-      birthDate: "14-02-1988",
-      age: 33,
-      city: "Lagos, Nigeria",
-    },
-    {
-      email: "val@gmail.com",
-      name: "Valentine Ezeh",
-      birthDate: "14-02-1988",
-      age: 33,
-      city: "Lagos, Nigeria",
-    },
-    {
-      email: "val@gmail.com",
-      name: "Valentine Ezeh",
-      birthDate: "14-02-1988",
-      age: 33,
-      city: "Lagos, Nigeria",
-    },
-    {
-      email: "val@gmail.com",
-      name: "Valentine Ezeh",
-      birthDate: "14-02-1988",
-      age: 33,
-      city: "Lagos, Nigeria",
-    },
-    {
-      email: "val@gmail.com",
-      name: "Valentine Ezeh",
-      birthDate: "14-02-1988",
-      age: 33,
-      city: "Lagos, Nigeria",
-    },
-    {
-      email: "val@gmail.com",
-      name: "Valentine Ezeh",
-      birthDate: "14-02-1988",
-      age: 33,
-      city: "Lagos, Nigeria",
-    },
-    {
-      email: "val@gmail.com",
-      name: "Valentine Ezeh",
-      birthDate: "14-02-1988",
-      age: 33,
-      city: "Lagos, Nigeria",
-    },
-    {
-      email: "val@gmail.com",
-      name: "Valentine Ezeh",
-      birthDate: "14-02-1988",
-      age: 33,
-      city: "Lagos, Nigeria",
-    },
-    {
-      email: "val@gmail.com",
-      name: "Valentine Ezeh",
-      birthDate: "14-02-1988",
-      age: 33,
-      city: "Lagos, Nigeria",
-    },
-    {
-      email: "val@gmail.com",
-      name: "Valentine Ezeh",
-      birthDate: "14-02-1988",
-      age: 33,
-      city: "Lagos, Nigeria",
-    },
-    {
-      email: "val@gmail.com",
-      name: "Valentine Ezeh",
-      birthDate: "14-02-1988",
-      age: 33,
-      city: "Lagos, Nigeria",
-    },
-    {
-      email: "val@gmail.com",
-      name: "Valentine Ezeh",
-      birthDate: "14-02-1988",
-      age: 33,
-      city: "Lagos, Nigeria",
-    },
-    {
-      email: "val@gmail.com",
-      name: "Valentine Ezeh",
-      birthDate: "14-02-1988",
-      age: 33,
-      city: "Lagos, Nigeria",
-    },
-    {
-      email: "val@gmail.com",
-      name: "Valentine Ezeh",
-      birthDate: "14-02-1988",
-      age: 33,
-      city: "Lagos, Nigeria",
-    },
-    {
-      email: "val@gmail.com",
-      name: "Valentine Ezeh",
-      birthDate: "14-02-1988",
-      age: 33,
-      city: "Lagos, Nigeria",
-    },
-    {
-      email: "val@gmail.com",
-      name: "Valentine Ezeh",
-      birthDate: "14-02-1988",
-      age: 33,
-      city: "Lagos, Nigeria",
-    },
-    {
-      email: "val@gmail.com",
-      name: "Valentine Ezeh",
-      birthDate: "14-02-1988",
-      age: 33,
-      city: "Lagos, Nigeria",
-    },
-    {
-      email: "val@gmail.com",
-      name: "Valentine Ezeh",
-      birthDate: "14-02-1988",
-      age: 33,
-      city: "Lagos, Nigeria",
-    },
-    {
-      email: "val@gmail.com",
-      name: "Valentine Ezeh",
-      birthDate: "14-02-1988",
-      age: 33,
-      city: "Lagos, Nigeria",
-    },
-    {
-      email: "val@gmail.com",
-      name: "Valentine Ezeh",
-      birthDate: "14-02-1988",
-      age: 33,
-      city: "Lagos, Nigeria",
-    },
-    {
-      email: "val@gmail.com",
-      name: "Valentine Ezeh",
-      birthDate: "14-02-1988",
-      age: 33,
-      city: "Lagos, Nigeria",
-    },
-    {
-      email: "val@gmail.com",
-      name: "Valentine Ezeh",
-      birthDate: "14-02-1988",
-      age: 33,
-      city: "Lagos, Nigeria",
-    },
-  ];
+  let { users, usersMeta, isLoading } = useSelector((state: RootState) => ({
+    users: state.tableReducer.users ?? [],
+    usersMeta: state.tableReducer.usersMeta ?? { limit: 0, page: 0, total: 0 },
+    isLoading: state.tableReducer.isLoading,
+  }));
+
+  const tableHeaders = ["Name", "Email", "Age", "Date of Birth", "City"];
 
   return (
     <Paper className={classes.root}>
@@ -228,32 +67,42 @@ const TableComponent: React.FC<ITableProps> = ({ data }) => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {dataSample.map((row, index) => (
-              <StyledTableRow key={index}>
-                <StyledTableCell>{row.name}</StyledTableCell>
-                <StyledTableCell>{row.email}</StyledTableCell>
-                <StyledTableCell>{row.age}</StyledTableCell>
-                <StyledTableCell>{row.birthDate}</StyledTableCell>
-                <StyledTableCell>{row.city}</StyledTableCell>
-              </StyledTableRow>
-            ))}
+            {isLoading ? (
+              <Grid className={classes.loader}>
+                <Loader type="Circles" color="#262262" height={50} width={50} />
+              </Grid>
+            ) : (
+              users.map((row, index) => (
+                <StyledTableRow key={index}>
+                  <StyledTableCell>{row.name}</StyledTableCell>
+                  <StyledTableCell>{row.email}</StyledTableCell>
+                  <StyledTableCell>{row.age}</StyledTableCell>
+                  <StyledTableCell>
+                    {moment(row.birthDate).format("LL")}
+                  </StyledTableCell>
+                  <StyledTableCell>{row.city}</StyledTableCell>
+                </StyledTableRow>
+              ))
+            )}
           </TableBody>
           <TableFooter>
             <TableRow>
-              <TablePagination
-                rowsPerPageOptions={[10, 100, 1000, 10000]}
-                colSpan={3}
-                count={dataSample.length}
-                rowsPerPage={rowsPerPage}
-                page={page}
-                SelectProps={{
-                  inputProps: { "aria-label": "rows per page" },
-                  native: true,
-                }}
-                onChangePage={handleChangePage}
-                onChangeRowsPerPage={handleChangeRowsPerPage}
-                ActionsComponent={TablePaginationActions}
-              />
+              {!isLoading && (
+                <TablePagination
+                  rowsPerPageOptions={[10, 50, 100, 1000, 10000]}
+                  colSpan={3}
+                  count={usersMeta.total}
+                  rowsPerPage={usersMeta.limit}
+                  page={usersMeta.page}
+                  SelectProps={{
+                    inputProps: { "aria-label": "rows per page" },
+                    native: true,
+                  }}
+                  onChangePage={handleChangePage}
+                  onChangeRowsPerPage={handleChangeRowsPerPage}
+                  ActionsComponent={TablePaginationActions}
+                />
+              )}
             </TableRow>
           </TableFooter>
         </Table>
