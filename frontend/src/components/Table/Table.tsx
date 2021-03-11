@@ -9,6 +9,7 @@ import {
   TableRow,
   TablePagination,
   Grid,
+  Typography,
 } from "@material-ui/core";
 import { useDispatch, useSelector } from "react-redux";
 import moment from "moment";
@@ -67,6 +68,10 @@ const TableComponent = () => {
               <Grid className={classes.loader}>
                 <Loader type="Circles" color="#262262" height={50} width={50} />
               </Grid>
+            ) : users.length === 0 ? (
+              <Grid className={classes.loader}>
+                <Typography variant="h1">No Data</Typography>
+              </Grid>
             ) : (
               users.map((row, index) => (
                 <StyledTableRow key={index}>
@@ -83,7 +88,7 @@ const TableComponent = () => {
           </TableBody>
           <TableFooter>
             <TableRow>
-              {!isLoading && (
+              {!isLoading && users.length === 0 ? null : (
                 <TablePagination
                   rowsPerPageOptions={[10, 50, 100, 1000, 10000]}
                   colSpan={3}
