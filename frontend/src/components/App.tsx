@@ -4,7 +4,7 @@ import TableComponent from "./Table/Table";
 function App() {
   return (
     <div className="App">
-      <TableComponent data={[]} />
+      <TableComponent />
     </div>
   );
 }

@@ -15,14 +15,10 @@ import moment from "moment";
 import Loader from "react-loader-spinner";
 import { useStyles, StyledTableCell, StyledTableRow } from "./Table.styles";
 import TablePaginationActions from "../Pagination/Pagination";
-import { UserData, fetchUsers } from "./TableSlice";
+import { fetchUsers } from "./TableSlice";
 import { RootState } from "../../store/store";
 
-interface ITableProps {
-  data: Array<UserData>;
-}
-
-const TableComponent: React.FC<ITableProps> = ({ data }) => {
+const TableComponent = () => {
   const classes = useStyles();
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
